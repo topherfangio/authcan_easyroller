@@ -1,0 +1,3 @@
+== authcan_easyroller
+
+authcan_easyroller is a basic application merging Authlogic, CanCan and EasyRoles.

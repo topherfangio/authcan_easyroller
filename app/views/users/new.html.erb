@@ -1,0 +1,11 @@
+<h3>Register New User</h3>
+
+<% form_for @user, :url => account_path do |f| %>
+  <%= f.error_messages %>
+
+  <%= render :partial => "form", :object => f %>
+
+  <p>
+    <%= f.submit "Register" %>&nbsp;or&nbsp;<%= link_to 'return to list', users_path %>
+  </p>
+<% end %>

@@ -1,0 +1,29 @@
+<h3>Listing Users</h3>
+
+<table>
+  <tr>
+    <th>Email</th>
+    <th>Last Seen</th>
+    <th>Action</th>
+  </tr>
+
+<% @users.each do |user| %>
+  <tr>
+    <td><%= user.email %></td>
+    <td><%= datify user.last_request_at, :table %></td>
+
+    <td>
+      <%= link_to 'Show', user %>
+      &nbsp;|&nbsp;
+      <%= link_to 'Edit', edit_user_path(user) %>
+      &nbsp;|&nbsp;
+      <%= link_to 'Delete', user, :confirm => 'Are you sure?', :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+
+</table>
+
+<br />
+
+<%= link_to 'New User', new_user_path %>

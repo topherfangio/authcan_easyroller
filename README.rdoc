@@ -1,6 +1,8 @@
 == authcan_easyroller
 
-This is a basic application merging Authlogic[http://github.com/binarylogic/authlogic],
-CanCan[http://github.com/ryanb/cancan] and EasyRoles[http://github.com/platform45/easy_roles].
+This is a basic Rails application utilizing Authlogic[http://github.com/binarylogic/authlogic],
+CanCan[http://github.com/ryanb/cancan] and EasyRoles[http://github.com/platform45/easy_roles]
+to create a starting point for simple Rails-based applications that need authentication and
+authorization.
 
 More documentation on abilities and requirements to come soon.

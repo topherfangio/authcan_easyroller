@@ -1,3 +1,6 @@
 == authcan_easyroller
 
-authcan_easyroller is a basic application merging Authlogic, CanCan and EasyRoles.
+This is a basic application merging Authlogic[http://github.com/binarylogic/authlogic],
+CanCan[http://github.com/ryanb/cancan] and EasyRoles[http://github.com/platform45/easy_roles].
+
+More documentation on abilities and requirements to come soon.

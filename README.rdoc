@@ -45,12 +45,12 @@ planned enhancements so you can get a feel of where this project will go.
 Since this project is a basis for other projects, the easiest way to get started is to simply fork
 it to your new project and begin work. Alternatively, you can click the "Download Source" button at
 the top if you intend to use a source control other than git (or if you're just not into the whole
-forking thing). However, you do have to have the following gems installed (<tt>sudo gem install ...</tt>):
+forking thing). However, you do have to have the following gems installed:
 
-* rails
-* authlogic
-* cancan
-* easy_roles
+  sudo gem install rails
+  sudo gem install authlogic
+  sudo gem install cancan
+  sudo gem install easy_roles
 
 After forking or downloading the application, you'll want to get started by migrating the database:
 
@@ -82,10 +82,10 @@ roles your existing users have.
 
 You can find out more by checking each specific project's documentation, but here is the gist:
 
-The file +app/models/user.rb+ stores the roles mask of all available roles within the system. If
+The file <tt>app/models/user.rb</tt> stores the roles mask of all available roles within the system. If
 you change the roles mask, you will almost certainly need to change the abilities file.
 
-A user's abilities are defined in +app/models/ability.rb+. I generally prefer to specify what
+A user's abilities are defined in <tt>app/models/ability.rb</tt>. I generally prefer to specify what
 each role is allowed to do and then give a user all of the roles that they need instead of
 saying that an admin can do everything that a moderator can do. This tends to keep the ability
 model cleaner and your views don't change either. In addition, this allows you to assign roles
@@ -100,14 +100,16 @@ like so:
   if current_user.is_moderator?
   end
 
-If you wanted to let moderators manage users, you would simply call +can+
+If you wanted to let moderators manage users, you would simply call <tt>can</tt>
 
   # Moderator role abilities
   if current_user.is_moderator?
     can :manage, User
   end
 
-You can also define your own abilities if they don't tie to a k
+You can also define your own abilities if they don't tie to a particular object, but you must pass a
+<tt>nil</tt> object as the second argument to <tt>can?</tt> and you must specify all object types when
+defining the ability. I'll get in touch with the developer to see if this can be a tad bit more streamlined.
 
   # ability.rb
 
@@ -123,21 +125,17 @@ You can also define your own abilities if they don't tie to a k
     <%= link_to "Woot", "http://www.woot.com" %>
   <% end %>
 
-Note that you must pass a nil object as the second argument to +can?+ and you must specify all object
-types when defining the ability. I'll get in touch with the developer to see if this can be a tad bit
-more streamlined.
-
-Once you have the roles and abilities setup, your views can check who has access by simply calling +can?+
+Once you have the roles and abilities setup, your views can check who has access by simply calling <tt>can?</tt>
 
   if can? :create, Comment
     ...
   end
 
-You can also use +cannot?+
+You can also use <tt>cannot?</tt>
 
   link_to "Export", export_users_url unless cannot? :create, Export
 
-Using +can?+ and +cannot?+ is the preferred method of checking authorization privileges, however,
+Using <tt>can?</tt> and <tt>cannot?</tt> is the preferred method of checking authorization privileges, however,
 if you find a rare case that you need to limit access based on the role(s) that a user has, you can
 always do the following:
 
@@ -146,10 +144,10 @@ always do the following:
   end
 
 However, the beauty of authcan_easyroller (more specifically the CanCan integration) is that you
-don't have to. That is the exact purpose of the +Ability+ class! Use it to your advantage and
+don't have to. That is the exact purpose of the <tt>Ability</tt> class! Use it to your advantage and
 make your life easier.
 
-== Thanks
+== Special Thanks
 
 I would like to thank the creators of Authlogic, CanCan and Easy Roles for the effort that they put
 into these plugins. Adding them together was relatively straightforward and easy and I hope that they

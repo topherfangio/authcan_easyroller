@@ -22,13 +22,9 @@
 }
 
 .flash.error {
-	background-color: #000000;
-	color: #ffffff;
 }
 
 .flash.notice {
-	background-color: #999999;
-	color: #000000;
 }
 
 label {

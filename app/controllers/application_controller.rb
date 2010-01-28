@@ -29,11 +29,8 @@ class ApplicationController < ActionController::Base
     end
 
     def require_one_user
-      puts "request: #{request.request_uri}"
-      puts "new_user_url: #{new_user_url}"
-
       if User.count == 0 and not new_user_url.match(/#{request.request_uri}$/) and not account_url.match(/#{request.request_uri}$/)
-        flash[:notice] = "There must be at least one user to access the site."
+        flash[:error] = "No users yet, must create one to access the site."
 
         redirect_to new_user_url
         return false

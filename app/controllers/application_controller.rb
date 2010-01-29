@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
     end
 
     def require_one_user
-      if User.count == 0 and not new_user_url.match(/#{request.request_uri}$/) and not account_url.match(/#{request.request_uri}$/)
+      if User.count == 0 and not new_user_url.match(/#{request.request_uri}$/)
         flash[:error] = "No users yet, must create one to access the site."
 
         redirect_to new_user_url
@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
         store_location
 
         flash[:notice] = "You must be logged out to access this page."
-        redirect_to account_url
+        redirect_to user_url(current_user)
 
         return false
       end

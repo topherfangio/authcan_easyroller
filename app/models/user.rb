@@ -41,11 +41,11 @@ class User < ActiveRecord::Base
 
   private
     def assign_user_roles
-      self.roles << "user"
+      self.roles += ["user"]
 
       if User.count == 0
-        self.roles << "admin"
-        self.roles << "moderator"
+        self.roles += ["admin"]
+        self.roles += ["moderator"]
       end
     end
 end

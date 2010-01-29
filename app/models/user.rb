@@ -8,10 +8,6 @@ class User < ActiveRecord::Base
   }
 
 
-  # Associations
-  has_many :prayer_topics
-
-
   # Authentication and Authorization 
   acts_as_authentic
   easy_roles :roles_mask, :method => :bitmask

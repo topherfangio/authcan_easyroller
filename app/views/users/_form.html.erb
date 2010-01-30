@@ -1,4 +1,5 @@
-<%= form.hidden_field :id unless @user.id.nil? %>
+<%= form.hidden_field :id unless form.object.new_record? %>
+
 <p>
   <%= form.label :email, "E-mail" %>
   <%= form.text_field :email %>

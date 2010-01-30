@@ -39,6 +39,7 @@ planned enhancements so you can get a feel of where this project will go.
 * I plan on adding an easy password reset mechanism for users provided that you use an email column.
 * I also plan to add the configuration option to turn on e-mail confirmation before users are
   assigned any roles.
+* Oh, and I _*definitely*_ plan on updating this for Rails 3.0 when it comes out in a few months!
 
 == Installation
 

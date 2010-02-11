@@ -11,11 +11,12 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = exception.message
-    redirect_to root_url
+    redirect_back_or_default(root_url)
   end
 
   # Ensure there is at least one user in the system before trying to do anything
   before_filter :require_one_user
+  after_filter :store_location
 
   private
     def current_user_session

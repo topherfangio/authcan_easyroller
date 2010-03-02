@@ -25,8 +25,18 @@ class ApplicationController < ActionController::Base
     end
 
     def current_user
-      return @current_user if defined?(@current_user)
+      if defined?(@current_user)
+        return @current_user
+      end
+
       @current_user = current_user_session && current_user_session.user
+ 
+      if @current_user_session and @current_user_session.stale?
+        flash[:warning] = "You have been logged out due to an extended period of inactivity."
+        @current_user_session.destroy
+      end
+
+      return @current_user
     end
 
     def require_one_user
@@ -61,7 +71,9 @@ class ApplicationController < ActionController::Base
     end
 
     def store_location
-      session[:return_to] = request.request_uri
+      unless new_user_url.match(/#{request.request_uri}$/) or new_user_session_url.match(/#{request.request_uri}$/) 
+        session[:return_to] = request.request_uri
+      end
     end
 
     def redirect_back_or_default(default)

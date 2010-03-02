@@ -9,7 +9,10 @@ class User < ActiveRecord::Base
 
 
   # Authentication and Authorization 
-  acts_as_authentic
+  acts_as_authentic do |config|
+    config.logged_in_timeout = 1.hour
+  end
+
   easy_roles :roles_mask, :method => :bitmask
 
 

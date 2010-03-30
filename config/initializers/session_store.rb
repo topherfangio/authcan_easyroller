@@ -5,8 +5,8 @@
 # Make sure the secret is at least 30 characters and all random, 
 # no regular words or you'll be exposed to dictionary attacks.
 ActionController::Base.session = {
-  :key         => '_prayervigil_session',
-  :secret      => 'cb3eed4927296d37702ec9d66c6237775f1f51d405a368f00a754d0370135d53f5cb2909631bfc66d54ce50f4bbc0b0b0839a9708f1ce94b1f757ade8dff8a10'
+  :key    => '_authcan_easyroller_session',
+  :secret => 'e6c5f8d1582ebd918a0e67485d8d81bcb9771e86de6e0d6c17753cc782d5bf525691791b1f3967409829b53c2e6c150022fda625395d7904009e8efaa1f18f0f'
 }
 
 # Use the database for sessions instead of the cookie-based default,

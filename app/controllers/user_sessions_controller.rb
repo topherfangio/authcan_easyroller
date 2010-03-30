@@ -5,10 +5,15 @@ class UserSessionsController < ApplicationController
   load_and_authorize_resource
   
   def new
-    if current_user
-      redirect_to :controll => 'users', :action => 'show', :id => current_user
-    else
-      @user_session = UserSession.new
+    respond_to do |format|
+      if current_user
+        redirect_to :controll => 'users', :action => 'show', :id => current_user
+      else
+        @user_session = UserSession.new
+
+        format.html # new.html.erb
+        format.xml { render :xml => @user_session  }
+      end
     end
   end
   

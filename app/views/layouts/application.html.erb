@@ -25,8 +25,8 @@
     </div>
 
     <div id='flashes'>
-      <%= "<h5 class='flash error'>#{flash[:error]}</h5>" unless flash[:error].blank? %>
-      <%= "<h5 class='flash notice'>#{flash[:notice]}</h5>" unless flash[:notice].blank? %>
+      <%= raw "<h5 class='flash error'>#{flash[:error]}</h5>" unless flash[:error].blank? %>
+      <%= raw "<h5 class='flash notice'>#{flash[:notice]}</h5>" unless flash[:notice].blank? %>
     </div>
 
     <div id='content'>

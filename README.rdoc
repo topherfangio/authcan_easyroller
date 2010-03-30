@@ -1,3 +1,13 @@
+== Rails 3 Notes
+
+I wanted to put this at the top so that nobody misses it. There are currently some bugs due to
+Rails 3 still being in beta. As I come across these bugs, I will add them below and any workaround
+if available.
+
+* Bug&nbsp;#3928[https://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/3928] - process_parameter_filter throws an exception on array parameters
+	Status: Resolved in source control, awaiting next beta release.
+  Workaround: The code to enable parameter filtering in `config/application.rb` has been commented out until the next beta release.
+
 == authcan_easyroller
 
 This is a basic Rails application utilizing Authlogic[http://github.com/binarylogic/authlogic],
@@ -43,10 +53,20 @@ planned enhancements so you can get a feel of where this project will go.
 
 == Installation
 
-Since this project is a basis for other projects, the easiest way to get started is to simply fork
-it to your new project and begin work. Alternatively, you can click the "Download Source" button at
-the top if you intend to use a source control other than git (or if you're just not into the whole
-forking thing). However, you do have to have the following gems installed:
+I will be modifying this application over the next few weeks into a Rails Engine, but until I have
+the time, you can install this application by forking this project (or downloading the code) and
+then replacing all occurences of "AuthcanEasyroller" and "authcan_easyroller" with the appropriate
+name of your application. Once this is an engine, this step won't be necessary, but it's not that
+difficult to do for the moment. If you are on a *nix machine, you can run the following commands to
+find all of the files that need to be replaced:
+
+  grep authcaneasyroller * -ir
+  grep authcan_easyroller * -ir
+
+View the list of files and make sure you change all occurences (except those in this README, which
+you should probably rewrite entireley anyway).  
+
+The app should then be ready, however, you do need to have the following gems installed:
 
   sudo gem install rails
   sudo gem install authlogic
@@ -153,3 +173,4 @@ make your life easier.
 I would like to thank the creators of Authlogic, CanCan and Easy Roles for the effort that they put
 into these plugins. Adding them together was relatively straightforward and easy and I hope that they
 realize how much time this saves other developers!
+

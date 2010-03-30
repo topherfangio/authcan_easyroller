@@ -5,10 +5,8 @@ Rails 3 still being in beta. As I come across these bugs, I will add them below 
 if available.
 
 * Bug&nbsp;#3928[https://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/3928] - process_parameter_filter throws an exception on array parameters
-
-	Status: Resolved in source control, awaiting next beta release.
-
-  Workaround: The code to enable parameter filtering in `config/application.rb` has been commented out until the next beta release.
+	[Status:] Resolved in source control, awaiting next beta release.
+  [Workaround:] The code to enable parameter filtering in `config/application.rb` has been commented out until the next beta release.
 
 == authcan_easyroller
 

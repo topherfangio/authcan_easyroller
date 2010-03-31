@@ -70,36 +70,36 @@ Next, create a migration for the users:
 
 Then, copy the following contents into that file making any changes you see fit:
 
-	class CreateUsers < ActiveRecord::Migration
-		def self.up
-			create_table :users do |t|
-				# Necessary Columns - These are required for AuthcanEasyroller to function properly
-				t.string    :email,               :null => false
-				t.string    :crypted_password,    :null => false
-				t.string    :password_salt,       :null => false
-				t.string    :persistence_token,   :null => false
-				t.string    :single_access_token, :null => false
-				t.string    :perishable_token,    :null => false
-				t.integer   :roles_mask,          :null => false, :default => 0
+  class CreateUsers < ActiveRecord::Migration
+    def self.up
+      create_table :users do |t|
+        # Necessary Columns - These are required for AuthcanEasyroller to function properly
+        t.string    :email,               :null => false
+        t.string    :crypted_password,    :null => false
+        t.string    :password_salt,       :null => false
+        t.string    :persistence_token,   :null => false
+        t.string    :single_access_token, :null => false
+        t.string    :perishable_token,    :null => false
+        t.integer   :roles_mask,          :null => false, :default => 0
 				
-				# Magic Columns - You may leave any of the following out if you wish
-				t.integer   :login_count,         :null => false, :default => 0
-				t.integer   :failed_login_count,  :null => false, :default => 0
-				t.datetime  :last_request_at
-				t.datetime  :current_login_at
-				t.datetime  :last_login_at
-				t.string    :current_login_ip
-				t.string    :last_login_ip
+        # Magic Columns - You may leave any of the following out if you wish
+        t.integer   :login_count,         :null => false, :default => 0
+        t.integer   :failed_login_count,  :null => false, :default => 0
+        t.datetime  :last_request_at
+        t.datetime  :current_login_at
+        t.datetime  :last_login_at
+        t.string    :current_login_ip
+        t.string    :last_login_ip
 	 
-				# Timestamp Columns - You should have these on every database table you create
-				t.timestamps
-			end
-		end
+        # Timestamp Columns - You should have these on every database table you create
+        t.timestamps
+      end
+    end
 
-		def self.down
-			drop_table :users
-		end
-	end
+    def self.down
+      drop_table :users
+    end
+  end
 
 Once saved, migrate your database by running
 
@@ -214,4 +214,4 @@ I would like to thank the creators of Authlogic, CanCan and Easy Roles for the e
 into these plugins. Adding them together was relatively straightforward and easy and I hope that they
 realize how much time this saves other developers!
 
-Copyright (c) 2010 Topher Fangio, released under the MIT license.
+Copyright (c) 2009-2010 Topher Fangio

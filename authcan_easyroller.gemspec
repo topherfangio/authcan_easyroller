@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{authcan_easyroller}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Topher Fangio"]
@@ -37,9 +37,9 @@ Gem::Specification.new do |s|
      "app/views/users/show.html.erb",
      "authcan_easyroller.gemspec",
      "config/routes.rb",
-     "example/ability.rb",
-     "example/application.html.erb",
-     "example/main.css",
+     "examples/ability.rb",
+     "examples/application.html.erb",
+     "examples/main.css",
      "lib/authcan_easyroller.rb",
      "test/helper.rb",
      "test/test_authcan_easyroller.rb"
@@ -51,7 +51,8 @@ Gem::Specification.new do |s|
   s.summary = %q{Rails 3 engine for user authentication/authorization utilizing Authlogic, CanCan and EasyRoles}
   s.test_files = [
     "test/helper.rb",
-     "test/test_authcan_easyroller.rb"
+     "test/test_authcan_easyroller.rb",
+     "examples/ability.rb"
   ]
 
   if s.respond_to? :specification_version then

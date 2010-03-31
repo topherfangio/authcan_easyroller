@@ -13,8 +13,8 @@ module AuthcanEasyroller
       #
       #       Bug here: https://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/3928
       #
-			app.config.filter_parameters << :password
-			app.config.filter_parameters << :password_confirmation
+			# app.config.filter_parameters << :password
+			# app.config.filter_parameters << :password_confirmation
     end
   end
 end

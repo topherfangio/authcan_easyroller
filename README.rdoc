@@ -65,6 +65,13 @@ it's dependencies!
 
   gem install authlogic cancan easy_roles authcan_easyroller
 
+Next, add the dependencies to your <tt>Gemfile</tt>:
+
+  gem "authlogic", :git => "git://github.com/binarylogic/authlogic.git"
+  gem "cancan"
+  gem "easy_roles"
+  gem "authcan_easyroller"
+
 Next, create a migration for the users:
 
   rails generate migration CreateUsers
@@ -108,14 +115,16 @@ Once saved, migrate your database by running
 
 Next, copy the following files to their proper locations (feel free to edit them, these are just some basics to
 help get you started). The <tt>rails.js</tt> file at the bottom of the list is the official Rails jQuery file available
-at http://github.com/rails/jquery-ujs .
+at http://github.com/rails/jquery-ujs so make sure to remove the existing <tt>rails.js</tt> file from <tt>public/javascripts</tt>.
 
 * ability.rb[http://github.com/topherfangio/authcan_easyroller/raw/master/examples/ability.rb] -> <<APPLICATION>>/app/models/ability.rb
 * application.html.erb[http://github.com/topherfangio/authcan_easyroller/raw/master/examples/application.html.erb] -> <<APPLICATION>>/app/view/layouts/application.html.erb
 * main.css[http://github.com/topherfangio/authcan_easyroller/raw/master/examples/main.css] -> <<APPLICATION>/public/stylesheets/main.css
 * rails.js[http://github.com/rails/jquery-ujs/raw/master/src/rails.js] -> <<APPLICATION>/public/javascripts/rails.js
 
+Finally, remove <tt>public/index.html</tt> and add the following to your <tt>config/routs.rb</tt> file so that your server will load properly.
 
+  root :to => 'users#index'
 
 == Starting Your Engine
 

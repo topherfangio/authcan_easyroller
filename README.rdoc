@@ -60,9 +60,10 @@ planned enhancements so you can get a feel of where this project will go.
 
 == Installation/Setup
 
-Now that the code is a Rails 3 engine, installation is very simple; just install the gem and it's dependencies!
+Assuming you already have Rails 3 installed, installation is very simple; just install the gem and
+it's dependencies!
 
-  gem install rails authlogic cancan easy_roles authcan_easyroller
+  gem install authlogic cancan easy_roles authcan_easyroller
 
 Next, create a migration for the users:
 

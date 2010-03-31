@@ -1,0 +1,217 @@
+== Rails 3 Notes
+
+I wanted to put this at the top so that nobody misses it. There are currently some bugs due to
+Rails 3 still being in beta. As I come across these bugs, I will add them below and any workaround
+if available.
+
+* Bug&nbsp;#3928[https://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/3928] - process_parameter_filter throws an exception on array parameters
+
+  [Status:] Resolved in source control, awaiting next beta release.
+  [Workaround:] The code to enable parameter filtering in `lib/authcan_easyroller.rb` has been commented out until the next beta release.
+
+
+
+== authcan_easyroller
+
+This is a basic Rails engine utilizing Authlogic[http://github.com/binarylogic/authlogic],
+CanCan[http://github.com/ryanb/cancan] and Easy&nbsp;Roles[http://github.com/platform45/easy_roles]
+for simple Rails 3.x applications that need authentication and authorization.
+
+
+
+== Basis for Creation
+
+As a Rails developer, I find myself needing an elegant and easy-to-use solution for authentication
+and authorization in the small web-apps that I create. They generally aren't linked together since
+they are separate clients with completely different ideas and business models, but they both need
+the same underlying code to manage their users.
+
+I have used Authlogic for quite a while now and have found it to be very useful and a complete
+solution for authentication. Adding a dash of functionality here and there is fairly easy and the
+ability to extend it really drew me in (in fact, I helped develop some of the code behind
+authlogic_ldap[http://github.com/topherfangio/authlogic_ldap] which I never got to finish but
+still intend to do).
+
+After watching the screencast[http://railscasts.com/episodes/192-authorization-with-cancan] by
+Ryan Bates, I decided that CanCan was a great addition to my applications since it was easy to
+use and cleanly separated the authorization from the model and view logic. The only other piece
+was an easy way to manage roles soley in code, yet while storing the assignments in the database;
+and I found this in Easy Roles.
+
+Putting the three together, I now have a complete (albeit simple) authentication and authorization
+solution that I can easily plugin into existing or new applications (and update in one spot).
+
+
+
+== Future Enhancements
+
+Before we get into the nitty-gritty of how to use it, I wanted to go ahead and mention the
+planned enhancements so you can get a feel of where this project will go.
+
+* Authlogic supports many different types of authentication without you needing to change
+  hardly anything, so I plan on modifying the code to allow for all of the possible authentication
+  schemes. Thus, I definitely plan on integrating OpenID, LDAP, Facebook Connect and OAuth. I may
+  or may not implement PAM, but we'll see.
+* I plan on adding an easy password reset mechanism for users provided that you use an email column.
+* I also plan to add the configuration option to turn on e-mail verification before users are granted
+  access to the system.
+
+
+
+== Installation/Setup
+
+Now that the code is a Rails 3 engine, installation is very simple; just install the gem and it's dependencies!
+
+  gem install rails authlogic cancan easy_roles authcan_easyroller
+
+Next, create a migration for the users:
+
+  rails generate migration CreateUsers
+
+Then, copy the following contents into that file making any changes you see fit:
+
+	class CreateUsers < ActiveRecord::Migration
+		def self.up
+			create_table :users do |t|
+				# Necessary Columns - These are required for AuthcanEasyroller to function properly
+				t.string    :email,               :null => false
+				t.string    :crypted_password,    :null => false
+				t.string    :password_salt,       :null => false
+				t.string    :persistence_token,   :null => false
+				t.string    :single_access_token, :null => false
+				t.string    :perishable_token,    :null => false
+				t.integer   :roles_mask,          :null => false, :default => 0
+				
+				# Magic Columns - You may leave any of the following out if you wish
+				t.integer   :login_count,         :null => false, :default => 0
+				t.integer   :failed_login_count,  :null => false, :default => 0
+				t.datetime  :last_request_at
+				t.datetime  :current_login_at
+				t.datetime  :last_login_at
+				t.string    :current_login_ip
+				t.string    :last_login_ip
+	 
+				# Timestamp Columns - You should have these on every database table you create
+				t.timestamps
+			end
+		end
+
+		def self.down
+			drop_table :users
+		end
+	end
+
+Once saved, migrate your database by running
+
+  rake db:migrate
+
+Next, copy the following files to their proper locations (feel free to edit them, these are just some basics to
+help get you started). The <tt>rails.js</tt> file at the bottom of the list is the official Rails jQuery file available
+at http://github.com/rails/jquery-ujs .
+
+* ability.rb[http://github.com/topherfangio/authcan_easyroller/raw/master/examples/ability.rb] -> <<APPLICATION>>/app/models/ability.rb
+* application.html.erb[http://github.com/topherfangio/authcan_easyroller/raw/master/examples/application.html.erb] -> <<APPLICATION>>/app/view/layouts/application.html.erb
+* main.css[http://github.com/topherfangio/authcan_easyroller/raw/master/examples/main.css] -> <<APPLICATION>/public/stylesheets/main.css
+* rails.js[http://github.com/rails/jquery-ujs/raw/master/src/rails.js] -> <<APPLICATION>/public/javascripts/rails.js
+
+
+
+== Starting Your Engine
+
+Once you have everything setup correctly, simply run the following to start your application, then visit http://localhost:3000
+
+	rails server
+
+The application realizes that it has no users, and forces you to create one before you can continue
+to any page. The first user is always created as an administrator and thus has privileges to create
+new users, give themselves the "developer" role (or any/all roles) and do other adminy things. All
+users created after this will be given the default role of "user".
+
+Currently, the available roles are
+
+1. Developer
+2. Admin
+3. Moderator
+4. User
+
+I'm working on a way to extend this functionality as a configuration option, or perhaps give it an
+API so that you can create your own roles or modify the existing ones without having to delve into
+the gem's code. Check back often to see where that stands if it is something you need.
+
+
+
+== Usage
+
+You can find out more by checking each specific project's documentation, but here is the gist:
+
+A user's abilities are defined in <tt>app/models/ability.rb</tt>. I generally prefer to specify what
+each role is allowed to do and then give a user all of the roles that they need instead of
+saying that an admin can do everything that a moderator can do. This tends to keep the ability
+model cleaner and your views don't change either. In addition, this allows you to assign roles
+to a user for special circumstances. For instance, if you are writing a help desk app, you may
+decide that one particular customer is really superb and should also have status update abilities
+even though he has the customer role.
+
+You define your abilities in each role's section. For instance, the moderator's role currently looks
+like so:
+
+  # Moderator role abilities
+  if current_user.is_moderator?
+  end
+
+If you wanted to let moderators manage users, you would simply call <tt>can</tt>
+
+  # Moderator role abilities
+  if current_user.is_moderator?
+    can :manage, User
+  end
+
+You can also define your own abilities if they don't tie to a particular object, but you must pass a
+<tt>nil</tt> object as the second argument to <tt>can?</tt> and you must specify all object types when
+defining the ability. I'll get in touch with the developer to see if this can be a tad bit more streamlined.
+
+  # ability.rb
+
+  # Moderator role abilities
+  if current_user.is_moderator?
+    can :visit_woot_all_day, :all
+  end
+
+
+  # application.html.erb 
+
+  <% if can? :visit_woot_all_day, nil %>
+    <%= link_to "Woot", "http://www.woot.com" %>
+  <% end %>
+
+Once you have the roles and abilities setup, your views can check who has access by simply calling <tt>can?</tt>
+
+  if can? :create, Comment
+    ...
+  end
+
+You can also use <tt>cannot?</tt>
+
+  link_to "Export", export_users_url unless cannot? :create, Export
+
+Using <tt>can?</tt> and <tt>cannot?</tt> is the preferred method of checking authorization privileges, however,
+if you find a rare case that you need to limit access based on the role(s) that a user has, you can
+always do the following:
+
+  if current_user.is_moderator? || current_user.is_admin?
+    ...
+  end
+
+However, the beauty of authcan_easyroller (more specifically the CanCan integration) is that you
+don't have to. That is the exact purpose of the <tt>Ability</tt> class! Use it to your advantage and
+make your life easier.
+
+
+
+== Special Thanks
+
+I would like to thank the creators of Authlogic, CanCan and Easy Roles for the effort that they put
+into these plugins. Adding them together was relatively straightforward and easy and I hope that they
+realize how much time this saves other developers!
+
+Copyright (c) 2010 Topher Fangio, released under the MIT license.

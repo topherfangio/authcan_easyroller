@@ -1,0 +1,35 @@
+<h3>Listing Users</h3>
+
+<table>
+  <tr>
+    <th>Email</th>
+    <th>Last Seen</th>
+    <th>Action</th>
+  </tr>
+
+<% @users.each do |user| %>
+  <tr>
+    <td><%= user.email %></td>
+    <td><%= time_ago_in_words user.last_request_at %> ago</td>
+
+    <td>
+      <%= link_to 'Show', user %>
+      
+      <% if can? :update, user %> 
+        <%= link_separator %>
+        <%= link_to 'Edit', edit_user_path(user) %>
+      <% end %>
+
+      <% if can? :destroy, user %> 
+        <%= link_separator %>
+        <%= link_to 'Delete', user, :confirm => 'Are you sure?', :method => :delete %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+
+</table>
+
+<br />
+
+Not signed up? <%= link_to 'Register', new_user_path %> now!

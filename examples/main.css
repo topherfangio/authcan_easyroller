@@ -1,28 +1,28 @@
 #navigation {
-	float: left;
-	margin-bottom: 10px;
+  float: left;
+  margin-bottom: 10px;
 }
 
 #userland {
-	float: right;
-	margin-bottom: 10px;
+  float: right;
+  margin-bottom: 10px;
 }
 
 #flashes {
-	clear: both;
+  clear: both;
 }
 
 #content {
-	margin: 10px;
+  margin: 10px;
 }
 
 #copyright {
-	text-align: center;
+  text-align: center;
 }
 
 .flash {
-	border: 1px solid #000000;
-	padding: 10px;
+  border: 1px solid #000000;
+  padding: 10px;
 }
 
 .flash.error {
@@ -32,10 +32,10 @@
 }
 
 label {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 input[type=text],input[type=password],select,textarea {
-	clear: both;
-	display: block;
+  clear: both;
+  display: block;
 }

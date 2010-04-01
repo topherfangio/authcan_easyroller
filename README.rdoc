@@ -60,6 +60,9 @@ planned enhancements so you can get a feel of where this project will go.
 
 == Installation/Setup
 
+<b>Developers Note:</b><em>I have created an example&nbsp;project[http://github.com/topherfangio/authcan_easyroller-example]
+if you are just looking to play with it, or if you are having trouble getting your setup to work properly.</em>
+
 Assuming you already have Rails 3 installed, installation is very simple; just install the gem and
 it's dependencies!
 

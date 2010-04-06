@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{authcan_easyroller}
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Topher Fangio"]
-  s.date = %q{2010-03-31}
+  s.date = %q{2010-04-05}
   s.description = %q{This is a basic Rails engine utilizing Authlogic, CanCan and Easy Roles to create a starting point for simple Rails-based applications that need authentication and authorization. }
   s.email = %q{fangiotophia@gmail.com}
   s.extra_rdoc_files = [

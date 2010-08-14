@@ -1,19 +1,6 @@
-class AuthcanEasyrollerController < ApplicationController
-  helper :all # include all helpers, all the time
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
+require 'action_controller'
 
-  # Scrub sensitive parameters from your log
-  helper_method :current_user_session, :current_user
-
-  rescue_from CanCan::AccessDenied do |exception|
-    flash[:error] = exception.message
-    redirect_back_or_default(root_url)
-  end
-
-  # Ensure there is at least one user in the system before trying to do anything
-  before_filter :require_one_user
-  after_filter :store_location
-
+ActionController::Base.class_eval {
   private
     def current_user_session
       return @current_user_session if defined?(@current_user_session)
@@ -76,4 +63,25 @@ class AuthcanEasyrollerController < ApplicationController
       redirect_to(session[:return_to] || default)
       session[:return_to] = nil
     end
-end
+}
+
+require 'helpers/authcan_easyroller'
+ActionView::Base.send :include, AuthcanEasyrollerHelper
+
+ActionController::Base.instance_eval {
+  protect_from_forgery # See ActionController::RequestForgeryProtection for details
+
+  # Scrub sensitive parameters from your log
+  helper_method :current_user_session, :current_user
+
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = exception.message
+    redirect_back_or_default(root_url)
+  end
+
+  # Ensure there is at least one user in the system before trying to do anything
+  before_filter :require_one_user
+  after_filter :store_location
+}
+
+

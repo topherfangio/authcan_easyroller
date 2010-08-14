@@ -1,5 +1,9 @@
-require 'authcan_easyroller'
 require 'rails'
+
+require 'cancan'
+require 'authlogic'
+require 'easy_roles'
+require 'extensions/action_controller_base.rb'
 
 # AuthcanEasyroller
 module AuthcanEasyroller

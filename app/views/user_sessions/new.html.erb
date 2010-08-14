@@ -1,27 +1,37 @@
 <h1>Login</h1>
  
 <% form_for @user_session, :url => user_session_path do |f| %>
-  <%= f.error_messages %>
+  <% if @user_session.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_session.errors.count, "error") %> prohibited this nothing from being saved:</h2>
 
-  <p>
+      <ul>
+      <% @user_session.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
     <%= f.label :email %>
     <%= f.text_field :email %>
-  </p>
+  </div>
 
-  <p>
+  <div class="field">
     <%= f.label :password %>
     <%= f.password_field :password %>
-  </p>
+  </div>
 
-  <p>
+  <div class="field">
   <%= f.check_box :remember_me %><%= f.label :remember_me %>
-  </p>
+  </div>
 
-  <p>
+  <div class="actions">
     <%= f.submit "Login" %>
-  </p>
+  </div>
 
-  <p>
+  <div>
     Don't have an account yet? Why not <%= link_to "sign up", new_user_path %>!
-  </p>
+  </div>
 <% end %>

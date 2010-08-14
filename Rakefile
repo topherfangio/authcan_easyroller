@@ -11,6 +11,10 @@ begin
     gem.homepage = "http://github.com/topherfangio/authcan_easyroller"
     gem.authors = ["Topher Fangio"]
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
+    
+    gem.add_dependency "authlogic", ">= 2.1.3"
+    gem.add_dependency "cancan", ">= 1.0.2"
+    gem.add_dependency "easy_roles", ">= 1.0.0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new

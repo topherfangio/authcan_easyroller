@@ -69,8 +69,6 @@ require 'helpers/authcan_easyroller'
 ActionView::Base.send :include, AuthcanEasyrollerHelper
 
 ActionController::Base.instance_eval {
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
-
   # Scrub sensitive parameters from your log
   helper_method :current_user_session, :current_user
 
@@ -83,5 +81,4 @@ ActionController::Base.instance_eval {
   before_filter :require_one_user
   after_filter :store_location
 }
-
 

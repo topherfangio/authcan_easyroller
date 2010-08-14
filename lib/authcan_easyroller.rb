@@ -3,7 +3,7 @@ require 'rails'
 require 'cancan'
 require 'authlogic'
 require 'easy_roles'
-require 'extensions/action_controller_base.rb'
+require 'extensions/action_controller_base'
 
 # AuthcanEasyroller
 module AuthcanEasyroller

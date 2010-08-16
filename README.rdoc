@@ -1,16 +1,3 @@
-== Rails 3 Notes
-
-I wanted to put this at the top so that nobody misses it. There are currently some bugs due to
-Rails 3 still being in beta. As I come across these bugs, I will add them below and any workaround
-if available.
-
-* Bug&nbsp;#3928[https://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/3928] - process_parameter_filter throws an exception on array parameters
-
-  [Status:] Resolved in source control, awaiting next beta release.
-  [Workaround:] The code to enable parameter filtering in `lib/authcan_easyroller.rb` has been commented out until the next beta release.
-
-
-
 == authcan_easyroller
 
 This is a basic Rails engine utilizing Authlogic[http://github.com/binarylogic/authlogic],
@@ -61,19 +48,17 @@ planned enhancements so you can get a feel of where this project will go.
 == Installation/Setup
 
 <b>Developers Note:</b><em>I have created an example&nbsp;project[http://github.com/topherfangio/authcan_easyroller-example]
-if you are just looking to play with it, or if you are having trouble getting your setup to work properly.</em>
+if you are just looking to play with it, or if you are having trouble getting your setup to work properly. It should
+have everything necessary to get up and running quickly.</em>
 
 Assuming you already have Rails 3 installed, installation is very simple; just install the gem and
-it's dependencies!
+it's dependencies will automatically be installed!
 
-  gem install authlogic cancan easy_roles authcan_easyroller
+  gem install authcan_easyroller
 
-Next, add the dependencies to your <tt>Gemfile</tt>:
+Next, add the dependency to your <tt>Gemfile</tt>:
 
-  gem "authlogic", :git => "git://github.com/binarylogic/authlogic.git"
-  gem "cancan"
-  gem "easy_roles"
-  gem "authcan_easyroller"
+  gem "authcan_easyroller", ">= 0.1.3"
 
 Next, create a migration for the users:
 
@@ -120,9 +105,9 @@ Next, copy the following files to their proper locations (feel free to edit them
 help get you started). The <tt>rails.js</tt> file at the bottom of the list is the official Rails jQuery file available
 at http://github.com/rails/jquery-ujs so make sure to remove the existing <tt>rails.js</tt> file from <tt>public/javascripts</tt>.
 
-* ability.rb[http://github.com/topherfangio/authcan_easyroller/raw/master/examples/ability.rb] -> <<APPLICATION>>/app/models/ability.rb
-* application.html.erb[http://github.com/topherfangio/authcan_easyroller/raw/master/examples/application.html.erb] -> <<APPLICATION>>/app/view/layouts/application.html.erb
-* main.css[http://github.com/topherfangio/authcan_easyroller/raw/master/examples/main.css] -> <<APPLICATION>/public/stylesheets/main.css
+* ability.rb[http://github.com/topherfangio/authcan_easyroller-example/raw/master/app/models/ability.rb] -> <<APPLICATION>>/app/models/ability.rb
+* application.html.erb[http://github.com/topherfangio/authcan_easyroller-example/raw/master/app/views/layouts/application.html.erb] -> <<APPLICATION>>/app/view/layouts/application.html.erb
+* main.css[http://github.com/topherfangio/authcan_easyroller-example/raw/master/public/stylesheets/main.css] -> <<APPLICATION>/public/stylesheets/main.css
 * rails.js[http://github.com/rails/jquery-ujs/raw/master/src/rails.js] -> <<APPLICATION>/public/javascripts/rails.js
 
 Finally, remove <tt>public/index.html</tt> and add the following to your <tt>config/routs.rb</tt> file so that your server will load properly.
@@ -185,9 +170,23 @@ defining the ability. I'll get in touch with the developer to see if this can be
 
   # ability.rb
 
-  # Moderator role abilities
-  if current_user.is_moderator?
-    can :visit_woot_all_day, :all
+  class Ability
+
+    # Include the ability class so you can have some defaults
+    include AuthcanEasyroller::Ability
+
+    def initialize(current_user)
+
+      # If you override initialize, make sure to call this
+      # method so that you have the defaults setup
+      ae_ability_defaults(current_user)
+
+      # Moderator role abilities
+      if current_user.is_moderator?
+        can :visit_woot_all_day, :all
+      end
+
+    end
   end
 
 

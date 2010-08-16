@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Topher Fangio"]
-  s.date = %q{2010-05-04}
+  s.date = %q{2010-08-16}
   s.description = %q{This is a basic Rails engine utilizing Authlogic, CanCan and Easy Roles to create a starting point for simple Rails-based applications that need authentication and authorization. }
   s.email = %q{fangiotophia@gmail.com}
   s.extra_rdoc_files = [
@@ -22,11 +22,8 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
-     "app/controllers/authcan_easyroller_controller.rb",
      "app/controllers/user_sessions_controller.rb",
      "app/controllers/users_controller.rb",
-     "app/helpers/authcan_easyroller_helper.rb",
-     "app/models/ability.rb",
      "app/models/user.rb",
      "app/models/user_session.rb",
      "app/views/user_sessions/new.html.erb",
@@ -37,29 +34,28 @@ Gem::Specification.new do |s|
      "app/views/users/show.html.erb",
      "authcan_easyroller.gemspec",
      "config/routes.rb",
-     "examples/ability.rb",
-     "examples/application.html.erb",
-     "examples/main.css",
      "lib/authcan_easyroller.rb",
+     "lib/extensions/action_controller_base.rb",
+     "lib/extensions/cancan_ability.rb",
+     "lib/helpers/authcan_easyroller.rb",
      "test/helper.rb",
      "test/test_authcan_easyroller.rb"
   ]
   s.homepage = %q{http://github.com/topherfangio/authcan_easyroller}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.6}
+  s.rubygems_version = %q{1.3.7}
   s.summary = %q{Rails 3 engine for user authentication/authorization utilizing Authlogic, CanCan and EasyRoles}
   s.test_files = [
     "test/helper.rb",
-     "test/test_authcan_easyroller.rb",
-     "examples/ability.rb"
+     "test/test_authcan_easyroller.rb"
   ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<thoughtbot-shoulda>, [">= 0"])
       s.add_runtime_dependency(%q<authlogic>, [">= 2.1.3"])
       s.add_runtime_dependency(%q<cancan>, [">= 1.0.2"])

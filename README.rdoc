@@ -47,18 +47,19 @@ planned enhancements so you can get a feel of where this project will go.
 
 == Installation/Setup
 
-<b>Developers Note:</b><em>I have created an example&nbsp;project[http://github.com/topherfangio/authcan_easyroller-example]
+<b>Developers Note:</b> <em>I have created an example&nbsp;project[http://github.com/topherfangio/authcan_easyroller-example]
 if you are just looking to play with it, or if you are having trouble getting your setup to work properly. It should
 have everything necessary to get up and running quickly.</em>
 
-Assuming you already have Rails 3 installed, installation is very simple; just install the gem and
-it's dependencies will automatically be installed!
+Assuming you already have Rails 3 installed, installation is very simple; just add the gem to your Gemfile
+and run bundle install!
 
-  gem install authcan_easyroller
-
-Next, add the dependency to your <tt>Gemfile</tt>:
-
+  # Add this to your gemfile
   gem "authcan_easyroller", ">= 0.1.3"
+
+Run
+
+  bundle install
 
 Next, create a migration for the users:
 
@@ -104,6 +105,16 @@ Once saved, migrate your database by running
 Next, copy the following files to their proper locations (feel free to edit them, these are just some basics to
 help get you started). The <tt>rails.js</tt> file at the bottom of the list is the official Rails jQuery file available
 at http://github.com/rails/jquery-ujs so make sure to remove the existing <tt>rails.js</tt> file from <tt>public/javascripts</tt>.
+
+<b>Developer's Note:</b> <em>To save time, you can use <tt>wget</tt> or <tt>curl</tt> (which is installed by default on OS X) to download these files
+from the command line directly into the proper locations. Basic usage is as follows:</em>
+
+  cd my_app_directory/some/path/
+  wget http://github.com/topherfangio/autcan_easyroller-example/raw/master/some/path/filename.rb
+
+or
+
+  curl http://github.com/topherfangio/autcan_easyroller-example/raw/master/some/path/filename.rb > some/path/new_filename.rb
 
 * ability.rb[http://github.com/topherfangio/authcan_easyroller-example/raw/master/app/models/ability.rb] -> <<APPLICATION>>/app/models/ability.rb
 * application.html.erb[http://github.com/topherfangio/authcan_easyroller-example/raw/master/app/views/layouts/application.html.erb] -> <<APPLICATION>>/app/view/layouts/application.html.erb

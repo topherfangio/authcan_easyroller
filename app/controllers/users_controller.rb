@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   before_filter :load_correct_user, :only => [:show, :edit, :update]
-  before_filter :require_user, :only => [:edit, :update]
+  before_filter :require_user, :except => [:new, :create]
 
   load_and_authorize_resource
 

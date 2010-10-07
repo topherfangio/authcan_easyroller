@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Topher Fangio"]
-  s.date = %q{2010-08-16}
+  s.date = %q{2010-10-06}
   s.description = %q{This is a basic Rails engine utilizing Authlogic, CanCan and Easy Roles to create a starting point for simple Rails-based applications that need authentication and authorization. }
   s.email = %q{fangiotophia@gmail.com}
   s.extra_rdoc_files = [
@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
      "VERSION",
      "app/controllers/user_sessions_controller.rb",
      "app/controllers/users_controller.rb",
+     "app/models/ability.rb",
      "app/models/user.rb",
      "app/models/user_session.rb",
      "app/views/user_sessions/new.html.erb",

@@ -54,7 +54,7 @@ ActionController::Base.class_eval {
     end
 
     def store_location
-      unless new_user_url.match(/#{request.fullpath}$/) or new_user_session_url.match(/#{request.fullpath}$/) 
+      unless new_user_url.match(/#{request.fullpath}$/) or new_user_session_url.match(/#{request.fullpath}$/) or (user_session_url.match(/#{request.fullpath}$/) and request.post?)
         session[:return_to] = request.fullpath
       end
     end

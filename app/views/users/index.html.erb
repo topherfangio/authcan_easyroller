@@ -2,15 +2,13 @@
 
 <table>
   <tr>
-    <th>Email</th>
-    <th>Last Seen</th>
+    <th>Name</th>
     <th></th>
   </tr>
 
 <% @users.each do |user| %>
   <tr>
-    <td><%= link_to user.email, user %></td>
-    <td><%= user.last_request_at.nil? ? 'never' : "#{time_ago_in_words user.last_request_at} ago" %></td>
+    <td><%= link_to user.name, user %></td>
 
     <td>
       <% if can? :update, user %> 

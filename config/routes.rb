@@ -1,4 +1,8 @@
 Rails::Application.routes.draw do |map|
 	resources :users
-	resource :user_session
+
+  match '/login', :controller => 'sessions', :action => 'new'
+  match 'logout', :controller => 'sessions', :action => 'destroy'
+
+  match '/auth/:provider/callback', :to => 'sessions#create'
 end

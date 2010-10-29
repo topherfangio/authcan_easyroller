@@ -1,11 +1,12 @@
 require 'rails'
 
 require 'cancan'
-require 'authlogic'
+require 'omniauth'
 require 'easy_roles'
 
 require 'extensions/action_controller_base'
 require 'extensions/cancan_ability'
+require 'extensions/user'
 
 # AuthcanEasyroller
 module AuthcanEasyroller

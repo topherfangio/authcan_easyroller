@@ -3,7 +3,7 @@ module AuthcanEasyroller
 
     def ae_ability_defaults(current_user)
       can :read, :all
-      can :manage, UserSession
+      can :manage, Authorization
 
       if current_user
         # Abilities for someone with an account (does not necessarily have a "user" role)

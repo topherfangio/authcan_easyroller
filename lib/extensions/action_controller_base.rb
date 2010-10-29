@@ -1,84 +1,79 @@
 require 'action_controller'
 
 ActionController::Base.class_eval {
-  private
-    def current_user_session
-      return @current_user_session if defined?(@current_user_session)
-      @current_user_session = UserSession.find
+  protected
+
+  def current_user
+    @current_user ||= User.find_by_id(session[:user_id])
+  end
+
+  def signed_in?
+    !!current_user
+  end
+
+  def current_user=(user)
+    @current_user = user
+    if user.nil?
+      session[:user_id] = nil
+    else
+      session[:user_id] = user.id
     end
+  end
 
-    def current_user
-      if defined?(@current_user)
-        return @current_user
-      end
+  def require_user
+    unless current_user
+      store_location
 
-      @current_user = current_user_session && current_user_session.user
- 
-      if @current_user_session and @current_user_session.stale?
-        flash[:warning] = "You have been logged out due to an extended period of inactivity."
-        @current_user_session.destroy
-      end
+      flash[:notice] = "You must be logged in to access this page."
+      redirect_to login_url
 
-      return @current_user
+      return false
     end
+  end
 
-    def require_one_user
-      if User.count == 0 and not users_url.match(/#{request.fullpath}$/) and not new_user_url.match(/#{request.fullpath}$/)
-        flash[:error] = "No users yet, must create one to access the site."
+  def require_no_user
+    if current_user
+      store_location
 
-        redirect_to new_user_url
-        return false
-      end
+      flash[:notice] = "You must be logged out to access this page."
+      redirect_to user_url(current_user)
+
+      return false
     end
+  end
 
-    def require_user
-      unless current_user
-        store_location
-
-        flash[:notice] = "You must be logged in to access this page."
-        redirect_to new_user_session_url
-
-        return false
-      end
+  def store_location
+    unless session[:auth_is_processing]
+      session[:return_to] = request.fullpath
     end
+  end
 
-    def require_no_user
-      if current_user
-        store_location
+  # Override this in the authentication controller so that we
+  # skip storing authentication URLs in the store_location
+  # method
+  def set_auth_is_processing
+    session[:auth_is_processing] = false;
+  end
 
-        flash[:notice] = "You must be logged out to access this page."
-        redirect_to user_url(current_user)
-
-        return false
-      end
-    end
-
-    def store_location
-      unless new_user_url.match(/#{request.fullpath}$/) or new_user_session_url.match(/#{request.fullpath}$/) or (user_session_url.match(/#{request.fullpath}$/) and request.post?)
-        session[:return_to] = request.fullpath
-      end
-    end
-
-    def redirect_back_or_default(default)
-      redirect_to(session[:return_to] || default)
-      session[:return_to] = nil
-    end
+  def redirect_back_or_default(default)
+    redirect_to(session[:return_to] || default)
+    session[:return_to] = nil
+  end
 }
 
 require 'helpers/authcan_easyroller'
 ActionView::Base.send :include, AuthcanEasyrollerHelper
 
 ActionController::Base.instance_eval {
-  # Scrub sensitive parameters from your log
-  helper_method :current_user_session, :current_user
+
+  helper_method :current_user, :signed_in?
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = exception.message
     redirect_back_or_default(root_url)
   end
 
-  # Ensure there is at least one user in the system before trying to do anything
-  before_filter :require_one_user
+  before_filter :set_auth_is_processing
   after_filter :store_location
 }
 

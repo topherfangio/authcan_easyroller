@@ -1,4 +1,5 @@
 Rails::Application.routes.draw do |map|
+  resources :authorizations
 	resources :users
 
   match '/login', :controller => 'sessions', :action => 'new'

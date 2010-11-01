@@ -26,21 +26,12 @@ module AuthcanEasyroller
       base.const_set('HUMANIZED_COLUMNS', { }) unless base.const_defined?  'HUMANIZED_COLUMNS'
 
       base.class_eval {
+        has_many :authorizations
 
         easy_roles :roles_mask, :method => :bitmask
 
         # Ensure the user has the proper roles
         before_create :assign_user_roles
-
-        # Validations
-=begin
-        validates_each :roles do |record, attr, value|
-          # If the roles changed, and it's not a new record whose only role is "user" and there is at least 1 user already in the system...
-          if record.roles_mask_changed? and not (record.new_record? and record.roles == ["user"]) and base.count > 0
-            record.errors.add attr, ' can only be modified by an administrator.' if (not current_user.is_developer? and not current_user.is_admin?)
-          end
-        end
-=end
       }
     end
 

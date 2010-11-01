@@ -5,6 +5,16 @@
   <%=h @user.name %>
 </p>
 
+<p>
+  <b>Linked Accounts:</b>
+
+  <ul>
+    <% @user.authorizations.each do |auth| %>
+      <li><%= provider_authenticate_link(auth.provider) %></li>
+    <% end %>
+  </ul>
+</p>
+
 
 <%= link_to('Edit', edit_user_path(@user)) + " or " if can? :edit, @user %>
 

@@ -1,0 +1,27 @@
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this nothing from being saved:</h2>
+
+    <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<h3>Linked Accounts</h3>
+<ul>
+  <% @user.authorizations.each do |auth| %>
+    <li><%= auth.provider %> (<%= link_to 'deauthorize', authorization_path(auth), :method => 'delete' %>)</li>
+  <% end %>
+</ul>
+
+<%= form.hidden_field :id unless form.object.new_record? %>
+
+<% if can? :manage, :roles %>
+  <p>
+    <%= form.label :roles %>
+    <%= form.select :roles, User::ROLES_MASK, {}, { :multiple => true, :size => 4 } %>
+  </p>
+<% end %>

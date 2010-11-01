@@ -62,7 +62,10 @@ ActionController::Base.class_eval {
 }
 
 require 'helpers/authcan_easyroller'
+require 'helpers/authentication_providers'
+
 ActionView::Base.send :include, AuthcanEasyrollerHelper
+ActionView::Base.send :include, AuthenticationProviders
 
 ActionController::Base.instance_eval {
 
